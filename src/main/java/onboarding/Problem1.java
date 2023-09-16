@@ -29,7 +29,18 @@ class Problem1 {
         if(NotInPageRange(pobi) && NotInPageRange(crong)){
             return exceptionNum;
         }
+
         //로직 작성
+        int pobiScore =0;
+        int crongScore=0;
+
+        //점수 구하기
+        pobiScore = calcScore(pobi);
+        crongScore = calcScore(crong);
+
+        //누가 이겼는지 구하기
+        answer = findWinner(pobiScore,crongScore);
+
         return answer;
     }
 
@@ -42,9 +53,42 @@ class Problem1 {
     public static boolean NotInPageRange(List<Integer> list){
         Integer startPage = list.get(0);
         Integer endPage = list.get(1);
-        if((startPage > 0 && startPage <=400) && (endPage>0 && endPage <=400)){
-            return false;
+        return (startPage <= 0 || startPage > 400) || (endPage <= 0 || endPage > 400);
+    }
+    public static int calcScore(List<Integer> list){
+        //더하기랑 곱하기 점수 구하기
+        int plus = getPlus(list);
+        int multiple = getMultiple(list);
+
+        return Math.max(plus,multiple);
+    }
+    public static int getPlus(List<Integer> list){
+        int res = 0;
+        for(Integer a:list){
+            int sum=0;
+            while(a!=0){
+                sum+= a%10;
+                a/=10;
+            }
+            if(sum > res) res = sum;
         }
-        return true;
+        return res;
+    }
+    public static int getMultiple(List<Integer> list){
+        int res = 0;
+        for(Integer a:list){
+            int sum=1;
+            while(a!=0){
+                sum*= a%10;
+                a/=10;
+            }
+            if(sum > res) res = sum;
+        }
+        return res;
+    }
+    public static int findWinner(int pobiScore, int crongScore){
+        if(pobiScore > crongScore) return pobiNum;
+        else if(pobiScore < crongScore) return crongNum;
+        else return drawNum;
     }
 }
