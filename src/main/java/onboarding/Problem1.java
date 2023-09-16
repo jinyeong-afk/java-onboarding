@@ -20,7 +20,31 @@ class Problem1 {
     public static int solution(List<Integer> pobi, List<Integer> crong) {
         int answer = Integer.MAX_VALUE;
         //예외상황 검사 코드 작성
+        if (NotEvenAndOdd(pobi) && NotEvenAndOdd(crong)) {
+            return exceptionNum;
+        }
+        if(NotDiffIsOne(pobi) && NotDiffIsOne(crong)){
+            return exceptionNum;
+        }
+        if(NotInPageRange(pobi) && NotInPageRange(crong)){
+            return exceptionNum;
+        }
         //로직 작성
         return answer;
+    }
+
+    public static boolean NotEvenAndOdd(List<Integer> list){
+        return list.get(0) % 2 == 0 || list.get(1) % 2 != 0;
+    }
+    public static boolean NotDiffIsOne(List<Integer> list){
+        return list.get(1) - list.get(0) != 1;
+    }
+    public static boolean NotInPageRange(List<Integer> list){
+        Integer startPage = list.get(0);
+        Integer endPage = list.get(1);
+        if((startPage > 0 && startPage <=400) && (endPage>0 && endPage <=400)){
+            return false;
+        }
+        return true;
     }
 }
